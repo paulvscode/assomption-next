@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette */
+  --color-primary:      #5C5763;
+  --color-primary-dark: #3D3B42;
+  --color-surface:      #F5F5F5;
+  --color-muted:        #8B8892;
+  --color-border:       #E4E2E6;
+
+  /* Fonts */
+  --font-display: var(--font-montserrat), "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    var(--font-nunito), "Nunito", ui-sans-serif, system-ui, sans-serif;
+}
+
+@keyframes hero-zoom {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.08); }
+}
+
+.animate-hero-zoom {
+  animation: hero-zoom 16s ease-in-out infinite;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+a, button, [role="button"] {
+  cursor: pointer;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-nunito), "Nunito", system-ui, sans-serif;
+  color: #2E2C31;
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

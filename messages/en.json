@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "ourSchool": "Our school",
+    "schoolPresentation": "School presentation",
+    "educationalProject": "Educational project",
+    "schoolProject": "School project",
+    "pastoralMission": "Pastoral mission",
+    "professors": "Teachers & staff",
+    "englishProgram": "English program",
+    "specialPrograms": "Special programs",
+    "ash": "ASH program",
+    "ulis": "ULIS",
+    "englishClass": "The English-language class",
+    "practicalInfo": "Practical information",
+    "locationContact": "Location & contact",
+    "cafeteria": "Cafeteria & meals",
+    "application": "Application form",
+    "fees": "Fees",
+    "backToSchool": "Back to school",
+    "schoolBreaks": "School breaks",
+    "documents": "Other documents",
+    "apel": "APEL",
+    "apelPresentation": "Presentation",
+    "apelNews": "News",
+    "events": "Events",
+    "ogec": "OGEC",
+    "ogecPresentation": "Presentation",
+    "ogecNews": "News",
+    "schoolNews": "School news"
+  },
+  "common": {
+    "readMore": "Read more",
+    "backToList": "Back to list",
+    "contactUs": "Contact us",
+    "schoolName": "Assomption School",
+    "downloadFile": "Download",
+    "postedOn": "Posted on",
+    "noContent": "Content coming soon.",
+    "language": "Language"
+  },
+  "landing": {
+    "discoverSchool": "Discover the school",
+    "latestNews": "Latest news",
+    "upcomingEvents": "Upcoming events"
+  },
+  "professors": {
+    "team": "Our team"
+  },
+  "news": {
+    "allNews": "All news",
+    "by": "By"
+  },
+  "events": {
+    "allEvents": "All events",
+    "date": "Date",
+    "location": "Location"
+  },
+  "contact": {
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "openingHours": "Opening hours"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "legalNotice": "Legal notice",
+    "privacyPolicy": "Privacy policy"
+  }
+}

@@ -1,0 +1,30 @@
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
+import { getMessages } from "next-intl/server";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import HtmlLang from "@/components/ui/HtmlLang";
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+
+  const messages = await getMessages();
+
+  return (
+    <NextIntlClientProvider messages={messages}>
+      {/* Sets document.documentElement.lang on the client */}
+      <HtmlLang locale={locale} />
+      <Header />
+      <main className="flex-1">{children}</main>
+      <Footer />
+    </NextIntlClientProvider>
+  );
+}
