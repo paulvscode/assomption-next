@@ -22,6 +22,7 @@ export default function LoginPage() {
 
     if (res.ok) {
       router.push("/studio");
+      return;
     } else {
       setError("Mot de passe incorrect. / Incorrect password.");
       setLoading(false);
@@ -84,11 +85,14 @@ export default function LoginPage() {
         </div>
 
         {/* Back link */}
-        <p className="mt-5 text-center text-xs text-muted">
-          <a href="/fr" className="hover:text-primary transition-colors">
+        <div className="mt-5 flex flex-col items-center gap-2">
+          <a href="/fr" className="text-xs text-muted hover:text-primary transition-colors">
             ← Retour au site · Back to site
           </a>
-        </p>
+          <a href="/admin-guide" className="text-xs text-muted hover:text-primary transition-colors">
+            Guide administrateur
+          </a>
+        </div>
       </div>
     </div>
   );

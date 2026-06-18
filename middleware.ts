@@ -5,9 +5,10 @@ import { routing } from "./i18n/routing";
 const intlMiddleware = createMiddleware(routing);
 
 const studioRoutes: { prefix: string; cookie: string; login: string }[] = [
-  { prefix: "/studio-apel", cookie: "apel_auth", login: "/login-apel" },
-  { prefix: "/studio-ogec", cookie: "ogec_auth", login: "/login-ogec" },
-  { prefix: "/studio",      cookie: "studio_auth", login: "/login" },
+  { prefix: "/studio-apel",  cookie: "apel_auth",   login: "/login-apel" },
+  { prefix: "/studio-ogec",  cookie: "ogec_auth",   login: "/login-ogec" },
+  { prefix: "/studio",       cookie: "studio_auth", login: "/login" },
+  { prefix: "/admin-guide",  cookie: "studio_auth", login: "/login" },
 ];
 
 const publicPaths = ["/login", "/login-apel", "/login-ogec"];
