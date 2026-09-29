@@ -2,9 +2,9 @@
 
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
-import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./sanity/schemas";
 import { structure } from "./sanity/lib/structure";
+import { publicationStatusBadge } from "./sanity/lib/publicationStatusBadge";
 import { apiVersion, dataset, projectId } from "./sanity/env";
 
 export default defineConfig({
@@ -14,8 +14,6 @@ export default defineConfig({
   apiVersion,
   title: "École Assomption",
   schema: { types: schemaTypes },
-  plugins: [
-    structureTool({ structure }),
-    visionTool({ defaultApiVersion: apiVersion }),
-  ],
+  plugins: [structureTool({ structure })],
+  document: { badges: (prev) => [...prev, publicationStatusBadge] },
 });

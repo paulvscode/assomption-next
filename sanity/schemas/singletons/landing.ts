@@ -1,13 +1,22 @@
 import { defineType, defineField } from "sanity";
 import { localizedString, localizedText } from "../helpers/localized";
 
-const qlImage = (name: string, title: string) =>
-  defineField({ name, title, type: "image", options: { hotspot: true } });
+const inGroup = <T extends { name: string }>(field: T, group: string) => ({ ...field, group });
+
+const qlImage = (name: string, title: string, group: string) =>
+  defineField({ name, title, type: "image", options: { hotspot: true }, group });
 
 export const landing = defineType({
   name: "landing",
   title: "Page d'accueil",
   type: "document",
+  groups: [
+    { name: "banniere", title: "Bannière", default: true },
+    { name: "actualites", title: "Actualités" },
+    { name: "hero", title: "Bandeau principal" },
+    { name: "liens", title: "Liens rapides" },
+    { name: "contact", title: "Contact" },
+  ],
   fields: [
     // ── Bannière d'annonce ────────────────────────────────────────────────
     defineField({
@@ -16,8 +25,9 @@ export const landing = defineType({
       type: "boolean",
       description: "Activer pour afficher la bannière en haut de la page d'accueil.",
       initialValue: false,
+      group: "banniere",
     }),
-    localizedString("bannerText", "Texte de la bannière"),
+    inGroup(localizedString("bannerText", "Texte de la bannière"), "banniere"),
 
     // ── Actualités ────────────────────────────────────────────────────────
     defineField({
@@ -26,32 +36,33 @@ export const landing = defineType({
       type: "boolean",
       description: "Activer pour afficher les dernières actualités sur la page d'accueil.",
       initialValue: true,
+      group: "actualites",
     }),
 
     // ── Hero ──────────────────────────────────────────────────────────────
-    localizedString("tagline",    "Accroche (ex : Le Havre · École catholique)"),
-    localizedString("h1",         "Titre principal — H1"),
-    localizedString("h2",         "Sous-titre — H2"),
-    localizedText(  "statement",  "Paragraphe d'introduction"),
-    localizedString("cta",        "Bouton principal (ex : En savoir plus)"),
-    localizedString("ctaContact", "Bouton contact (ex : Nous contacter)"),
-    defineField({ name: "heroImage", title: "Image hero", type: "image", options: { hotspot: true } }),
+    inGroup(localizedString("tagline",    "Accroche (ex : Le Havre · École catholique)"), "hero"),
+    inGroup(localizedString("h1",         "Titre principal — H1"), "hero"),
+    inGroup(localizedString("h2",         "Sous-titre — H2"), "hero"),
+    inGroup(localizedText(  "statement",  "Paragraphe d'introduction"), "hero"),
+    inGroup(localizedString("cta",        "Bouton principal (ex : En savoir plus)"), "hero"),
+    inGroup(localizedString("ctaContact", "Bouton contact (ex : Nous contacter)"), "hero"),
+    defineField({ name: "heroImage", title: "Image hero", type: "image", options: { hotspot: true }, group: "hero" }),
 
     // ── Liens rapides ─────────────────────────────────────────────────────
-    localizedString("linksTitle", "Titre — Liens rapides"),
-    qlImage("qlEquipe",              "Lien rapide — L'équipe"),
-    qlImage("qlProjetEducatif",      "Lien rapide — Le projet éducatif"),
-    qlImage("qlProjetEtablissement", "Lien rapide — Le projet d'établissement"),
-    qlImage("qlProjetPastoral",      "Lien rapide — Le projet pastoral"),
-    qlImage("qlAnglais",             "Lien rapide — L'anglais"),
-    qlImage("qlClassesSpecifiques",  "Lien rapide — Les classes spécifiques"),
+    inGroup(localizedString("linksTitle", "Titre — Liens rapides"), "liens"),
+    qlImage("qlEquipe",              "Lien rapide — L'équipe", "liens"),
+    qlImage("qlProjetEducatif",      "Lien rapide — Le projet éducatif", "liens"),
+    qlImage("qlProjetEtablissement", "Lien rapide — Le projet d'établissement", "liens"),
+    qlImage("qlProjetPastoral",      "Lien rapide — Le projet pastoral", "liens"),
+    qlImage("qlAnglais",             "Lien rapide — L'anglais", "liens"),
+    qlImage("qlClassesSpecifiques",  "Lien rapide — Les classes spécifiques", "liens"),
 
     // ── Contact ───────────────────────────────────────────────────────────
-    localizedString("contactTitle", "Titre — Section contact"),
-    defineField({ name: "address", title: "Adresse",    type: "text",   rows: 2 }),
-    defineField({ name: "phone",   title: "Téléphone",  type: "string" }),
-    defineField({ name: "email",   title: "Email",      type: "string" }),
-    localizedString("hours", "Horaires d'ouverture"),
+    inGroup(localizedString("contactTitle", "Titre — Section contact"), "contact"),
+    defineField({ name: "address", title: "Adresse",    type: "text",   rows: 2, group: "contact" }),
+    defineField({ name: "phone",   title: "Téléphone",  type: "string", group: "contact" }),
+    defineField({ name: "email",   title: "Email",      type: "string", group: "contact" }),
+    inGroup(localizedString("hours", "Horaires d'ouverture"), "contact"),
   ],
   preview: {
     prepare: () => ({ title: "Page d'accueil" }),
