@@ -7,6 +7,7 @@ import { event } from "./sanity/schemas/documents/event";
 import { apiVersion, dataset, projectId } from "./sanity/env";
 import { Dashboard, DashboardIcons, type DashboardTask } from "./sanity/components/Dashboard";
 import { publicationStatusBadge } from "./sanity/lib/publicationStatusBadge";
+import { defaultDocumentNode, removeDeleteAction } from "./sanity/lib/documentConfig";
 import type { StructureBuilder } from "sanity/structure";
 
 const dashboardTasks: DashboardTask[] = [
@@ -56,6 +57,9 @@ export default defineConfig({
   apiVersion,
   title: "APEL — Actualités & Événements",
   schema: { types: [newsApel, event] },
-  plugins: [structureTool({ structure })],
-  document: { badges: (prev) => [...prev, publicationStatusBadge] },
+  plugins: [structureTool({ structure, defaultDocumentNode })],
+  document: {
+    badges: (prev) => [...prev, publicationStatusBadge],
+    actions: removeDeleteAction,
+  },
 });

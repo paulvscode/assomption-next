@@ -1,11 +1,12 @@
 import { defineField } from "sanity";
+import { LocaleTabsInput } from "../../components/LocaleTabsInput";
 
 export const localizedString = (name: string, title: string) =>
   defineField({
     name,
     title,
     type: "object",
-    options: { columns: 2 },
+    components: { input: LocaleTabsInput },
     fields: [
       { name: "fr", title: `${title} (FR)`, type: "string" },
       { name: "en", title: `${title} (EN)`, type: "string" },
@@ -17,6 +18,7 @@ export const localizedText = (name: string, title: string) =>
     name,
     title,
     type: "object",
+    components: { input: LocaleTabsInput },
     fields: [
       { name: "fr", title: `${title} (FR)`, type: "text", rows: 4 },
       { name: "en", title: `${title} (EN)`, type: "text", rows: 4 },
@@ -28,6 +30,7 @@ export const localizedRichText = (name: string, title: string) =>
     name,
     title,
     type: "object",
+    components: { input: LocaleTabsInput },
     fields: [
       {
         name: "fr",

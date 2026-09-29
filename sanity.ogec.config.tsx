@@ -6,6 +6,7 @@ import { newsOgec } from "./sanity/schemas/documents/newsOgec";
 import { apiVersion, dataset, projectId } from "./sanity/env";
 import { Dashboard, DashboardIcons, type DashboardTask } from "./sanity/components/Dashboard";
 import { publicationStatusBadge } from "./sanity/lib/publicationStatusBadge";
+import { defaultDocumentNode, removeDeleteAction } from "./sanity/lib/documentConfig";
 import type { StructureBuilder } from "sanity/structure";
 
 const dashboardTasks: DashboardTask[] = [
@@ -45,6 +46,9 @@ export default defineConfig({
   apiVersion,
   title: "OGEC — Actualités",
   schema: { types: [newsOgec] },
-  plugins: [structureTool({ structure })],
-  document: { badges: (prev) => [...prev, publicationStatusBadge] },
+  plugins: [structureTool({ structure, defaultDocumentNode })],
+  document: {
+    badges: (prev) => [...prev, publicationStatusBadge],
+    actions: removeDeleteAction,
+  },
 });

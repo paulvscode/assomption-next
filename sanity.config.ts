@@ -5,6 +5,7 @@ import { structureTool } from "sanity/structure";
 import { schemaTypes } from "./sanity/schemas";
 import { structure } from "./sanity/lib/structure";
 import { publicationStatusBadge } from "./sanity/lib/publicationStatusBadge";
+import { defaultDocumentNode, removeDeleteAction } from "./sanity/lib/documentConfig";
 import { apiVersion, dataset, projectId } from "./sanity/env";
 
 export default defineConfig({
@@ -14,6 +15,9 @@ export default defineConfig({
   apiVersion,
   title: "École Assomption",
   schema: { types: schemaTypes },
-  plugins: [structureTool({ structure })],
-  document: { badges: (prev) => [...prev, publicationStatusBadge] },
+  plugins: [structureTool({ structure, defaultDocumentNode })],
+  document: {
+    badges: (prev) => [...prev, publicationStatusBadge],
+    actions: removeDeleteAction,
+  },
 });

@@ -1,11 +1,20 @@
 import type { StructureBuilder } from "sanity/structure";
 import { Dashboard, DashboardIcons, type DashboardTask } from "../components/Dashboard";
+import { HelpPanel } from "../components/HelpPanel";
 
 const singleton = (S: StructureBuilder, id: string, title: string, type: string) =>
   S.listItem()
     .title(title)
     .id(id)
-    .child(S.document().schemaType(type).documentId(type));
+    .child(
+      S.document()
+        .schemaType(type)
+        .documentId(type)
+        .views([
+          S.view.form().title("Contenu"),
+          S.view.component(HelpPanel).id("aide").title("Aide"),
+        ])
+    );
 
 const dashboardTasks: DashboardTask[] = [
   {
