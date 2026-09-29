@@ -1,4 +1,5 @@
 import type { StructureBuilder } from "sanity/structure";
+import { Dashboard, DashboardIcons, type DashboardTask } from "../components/Dashboard";
 
 const singleton = (S: StructureBuilder, id: string, title: string, type: string) =>
   S.listItem()
@@ -6,10 +7,66 @@ const singleton = (S: StructureBuilder, id: string, title: string, type: string)
     .id(id)
     .child(S.document().schemaType(type).documentId(type));
 
+const dashboardTasks: DashboardTask[] = [
+  {
+    title: "Publier une actualité",
+    description: "École, APEL ou OGEC",
+    intent: "create",
+    type: "newsSchool",
+    icon: DashboardIcons.news,
+  },
+  {
+    title: "Modifier la page d'accueil",
+    description: "Bannière, hero, contact",
+    intent: "edit",
+    type: "landing",
+    icon: DashboardIcons.image,
+  },
+  {
+    title: "Mettre à jour l'équipe",
+    description: "Ajouter ou modifier un professeur",
+    intent: "create",
+    type: "professor",
+    icon: DashboardIcons.users,
+  },
+  {
+    title: "Infos pratiques",
+    description: "Localisation, horaires, contact",
+    intent: "edit",
+    type: "locationContact",
+    icon: DashboardIcons.info,
+  },
+  {
+    title: "Espace APEL",
+    description: "Présentation et actualités",
+    intent: "edit",
+    type: "apelPresentation",
+    icon: DashboardIcons.heart,
+  },
+  {
+    title: "Paramètres du site",
+    description: "Logo, couleur d'accent",
+    intent: "edit",
+    type: "settings",
+    icon: DashboardIcons.settings,
+  },
+];
+
 export const structure = (S: StructureBuilder) =>
   S.list()
     .title("Contenu du site")
     .items([
+      S.listItem()
+        .title("🏠 Accueil")
+        .id("accueil")
+        .child(
+          S.component(() => <Dashboard tasks={dashboardTasks} />)
+            .title("Accueil")
+            .id("accueil-dashboard")
+        ),
+
+      S.divider(),
+
       singleton(S, "settings", "⚙️ Paramètres du site", "settings"),
 
       S.divider(),
