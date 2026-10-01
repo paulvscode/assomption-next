@@ -11,13 +11,22 @@ const studioRoutes: { prefix: string; cookie: string; login: string }[] = [
   { prefix: "/admin-guide",  cookie: "studio_auth", login: "/login" },
 ];
 
-const publicPaths = ["/login", "/login-apel", "/login-ogec"];
+const loginRoutes: { path: string; cookie: string; dashboard: string }[] = [
+  { path: "/login",      cookie: "studio_auth", dashboard: "/studio/structure/accueil" },
+  { path: "/login-apel", cookie: "apel_auth",   dashboard: "/studio-apel/structure/accueil" },
+  { path: "/login-ogec", cookie: "ogec_auth",   dashboard: "/studio-ogec/structure/accueil" },
+];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Login pages — serve as-is, no locale routing
-  if (publicPaths.includes(pathname)) {
+  // Login pages — already authenticated? Skip straight to the dashboard.
+  const loginRoute = loginRoutes.find((route) => route.path === pathname);
+  if (loginRoute) {
+    const auth = request.cookies.get(loginRoute.cookie);
+    if (auth?.value === "true") {
+      return NextResponse.redirect(new URL(loginRoute.dashboard, request.url));
+    }
     return NextResponse.next();
   }
 
