@@ -17,8 +17,20 @@ const loginRoutes: { path: string; cookie: string; dashboard: string }[] = [
   { path: "/login-ogec", cookie: "ogec_auth",   dashboard: "/studio-ogec/structure/accueil" },
 ];
 
+// Bare studio entry points — redirect straight to the Accueil dashboard
+// pane instead of landing on an empty "no pane selected" screen.
+const studioRoots: { path: string; cookie: string; dashboard: string }[] = [
+  { path: "/studio",              cookie: "studio_auth", dashboard: "/studio/structure/accueil" },
+  { path: "/studio/structure",    cookie: "studio_auth", dashboard: "/studio/structure/accueil" },
+  { path: "/studio-apel",           cookie: "apel_auth", dashboard: "/studio-apel/structure/accueil" },
+  { path: "/studio-apel/structure", cookie: "apel_auth", dashboard: "/studio-apel/structure/accueil" },
+  { path: "/studio-ogec",           cookie: "ogec_auth", dashboard: "/studio-ogec/structure/accueil" },
+  { path: "/studio-ogec/structure", cookie: "ogec_auth", dashboard: "/studio-ogec/structure/accueil" },
+];
+
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname: raw } = request.nextUrl;
+  const pathname = raw.length > 1 && raw.endsWith("/") ? raw.slice(0, -1) : raw;
 
   // Login pages — already authenticated? Skip straight to the dashboard.
   const loginRoute = loginRoutes.find((route) => route.path === pathname);
@@ -28,6 +40,17 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL(loginRoute.dashboard, request.url));
     }
     return NextResponse.next();
+  }
+
+  // Bare studio root — authenticated visitors go straight to the dashboard.
+  const studioRoot = studioRoots.find((route) => route.path === pathname);
+  if (studioRoot) {
+    const auth = request.cookies.get(studioRoot.cookie);
+    if (auth?.value === "true") {
+      return NextResponse.redirect(new URL(studioRoot.dashboard, request.url));
+    }
+    // Not authenticated — fall through to the studio routes below, which
+    // redirect to the matching login page.
   }
 
   // Studio routes — check the corresponding cookie
