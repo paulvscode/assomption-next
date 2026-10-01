@@ -21,7 +21,7 @@ export default function ApelLoginPage() {
     });
 
     if (res.ok) {
-      router.push("/studio-apel");
+      router.push("/studio-apel/structure/accueil");
     } else {
       setError("Mot de passe incorrect. / Incorrect password.");
       setLoading(false);
