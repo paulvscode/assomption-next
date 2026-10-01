@@ -1,12 +1,15 @@
+import Link from "next/link";
+
 const sections = [
-  { id: "acces",      label: "Accès & connexion" },
-  { id: "parametres", label: "Paramètres du site" },
-  { id: "accueil",    label: "Page d'accueil" },
-  { id: "actualites", label: "Actualités école" },
-  { id: "pages",      label: "Pages de l'école" },
-  { id: "apel",       label: "APEL" },
-  { id: "ogec",       label: "OGEC" },
-  { id: "publier",    label: "Publier les modifications" },
+  { id: "acces",       label: "Accès & connexion" },
+  { id: "dashboard",   label: "Écran d'accueil" },
+  { id: "parametres",  label: "Paramètres du site" },
+  { id: "accueil",     label: "Page d'accueil" },
+  { id: "actualites",  label: "Actualités école" },
+  { id: "pages",       label: "Pages de l'école" },
+  { id: "apel",        label: "APEL" },
+  { id: "ogec",        label: "OGEC" },
+  { id: "publier",     label: "Publier & gérer vos contenus" },
 ];
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
@@ -65,12 +68,12 @@ export default function AdminGuidePage() {
             <h1 className="font-display text-2xl font-bold text-white">Guide administrateur</h1>
             <p className="mt-1 text-sm text-white/60">École de l&apos;Assomption — Documentation interne</p>
           </div>
-          <a
+          <Link
             href="/studio"
             className="rounded-lg border border-white/20 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10"
           >
             Ouvrir le studio →
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -134,10 +137,23 @@ export default function AdminGuidePage() {
             </Tip>
           </Section>
 
-          {/* ── Paramètres du site ──────────────────────────────────────── */}
-          <Section id="parametres" title="2. Paramètres du site">
+          {/* ── Écran d'accueil ─────────────────────────────────────────── */}
+          <Section id="dashboard" title="2. Écran d'accueil">
             <p>
-              Dans le studio principal, cliquez sur <strong>Paramètres du site</strong> (tout en haut de la barre latérale gauche).
+              Une fois connecté, vous arrivez directement sur l&apos;écran <strong>Accueil</strong> du studio — premier élément de la barre latérale. Il ne s&apos;agit pas d&apos;une liste de contenus, mais d&apos;un ensemble de cartes correspondant aux actions les plus courantes : publier une actualité, mettre à jour l&apos;équipe, modifier les paramètres du site.
+            </p>
+            <p>
+              Pour modifier une page précise (page d&apos;accueil, présentation, infos pratiques, APEL, OGEC...), cliquez sur la carte <strong>Modifier le contenu d&apos;une page</strong>. Elle ouvre un écran qui liste toutes les pages du site, regroupées par thème — cliquez sur une page pour l&apos;ouvrir directement en édition.
+            </p>
+            <p>
+              Les espaces APEL et OGEC ont leur propre écran d&apos;accueil, avec uniquement les actions qui les concernent.
+            </p>
+          </Section>
+
+          {/* ── Paramètres du site ──────────────────────────────────────── */}
+          <Section id="parametres" title="3. Paramètres du site">
+            <p>
+              Dans le studio principal, cliquez sur <strong>Paramètres du site</strong> (dans la barre latérale, ou depuis la carte correspondante sur l&apos;écran d&apos;accueil).
             </p>
             <div className="space-y-2">
               <Field name="Logo" desc="Image affichée dans la barre de navigation. Format recommandé : PNG transparent, ratio 3:1 (ex. 300×100 px)." />
@@ -147,24 +163,24 @@ export default function AdminGuidePage() {
           </Section>
 
           {/* ── Page d'accueil ──────────────────────────────────────────── */}
-          <Section id="accueil" title="3. Page d'accueil">
+          <Section id="accueil" title="4. Page d'accueil">
             <p>
-              Dans le studio, ouvrez <strong>Notre école → Page d&apos;accueil</strong>. Cette page regroupe tous les éléments modifiables de la page principale du site.
+              Dans le studio, ouvrez <strong>Notre école → Page d&apos;accueil</strong> (ou <strong>Modifier le contenu d&apos;une page → Page d&apos;accueil</strong> depuis l&apos;écran d&apos;accueil). Les champs sont regroupés en <strong>cinq onglets</strong>, affichés en haut du formulaire, plutôt qu&apos;en une seule longue liste : Bannière, Actualités, Bandeau principal, Liens rapides, Contact.
             </p>
 
             <h3 className="font-display font-semibold text-primary">Bannière d&apos;annonce</h3>
             <p>Permet d&apos;afficher un message visible immédiatement sous la barre de navigation.</p>
             <div className="space-y-2">
               <Field name="Bannière active" desc="Interrupteur ON/OFF. Désactivée par défaut. Activez-la pour afficher le bandeau sur le site." />
-              <Field name="Texte de la bannière" desc="Message à afficher (FR et EN). Ex. : Journée portes ouvertes le samedi 12 avril." />
+              <Field name="Texte de la bannière" desc="Message à afficher. Utilisez l'interrupteur FR/EN au-dessus du champ pour basculer entre les deux langues. Ex. : Journée portes ouvertes le samedi 12 avril." />
             </div>
 
-            <h3 className="font-display font-semibold text-primary">Section actualités</h3>
+            <h3 className="font-display font-semibold text-primary">Actualités</h3>
             <div className="space-y-2">
               <Field name="Section actualités active" desc="Interrupteur ON/OFF. Affiche ou masque le bloc des 3 dernières actualités sur la page d'accueil." />
             </div>
 
-            <h3 className="font-display font-semibold text-primary">Hero (bandeau principal)</h3>
+            <h3 className="font-display font-semibold text-primary">Bandeau principal (hero)</h3>
             <div className="space-y-2">
               <Field name="Image hero" desc="Grande photo affichée en arrière-plan. Format paysage recommandé (1920×1080 px minimum)." />
               <Field name="Accroche" desc="Petite ligne au-dessus du titre. Ex. : Le Havre · École catholique." />
@@ -182,31 +198,39 @@ export default function AdminGuidePage() {
               <Field name="Lien rapide — [nom]" desc="Image de chaque carte. Format paysage recommandé (640×360 px)." />
             </div>
 
-            <h3 className="font-display font-semibold text-primary">Section contact</h3>
+            <h3 className="font-display font-semibold text-primary">Contact</h3>
             <div className="space-y-2">
               <Field name="Titre" desc="Titre de la section contact." />
               <Field name="Adresse" desc="Adresse postale de l'école (affichée sur 2 lignes)." />
               <Field name="Téléphone" desc="Numéro de téléphone affiché et cliquable." />
               <Field name="Email" desc="Adresse email affichée et cliquable." />
-              <Field name="Horaires d'ouverture" desc="Jours et heures d'ouverture (FR et EN)." />
+              <Field name="Horaires d'ouverture" desc="Jours et heures d'ouverture." />
             </div>
+
+            <h3 className="font-display font-semibold text-primary">Aperçu en direct</h3>
+            <p>
+              Dans le studio principal, l&apos;onglet <strong>Aperçu en direct</strong> (en haut de l&apos;écran, à côté de Structure) affiche le formulaire et le site côte à côte : vos modifications apparaissent dans l&apos;aperçu au fur et à mesure, avant même de publier.
+            </p>
+            <Tip>
+              Pour l&apos;instant, l&apos;aperçu en direct ne couvre que la page d&apos;accueil. Les autres pages restent modifiables normalement, mais sans aperçu en temps réel.
+            </Tip>
           </Section>
 
           {/* ── Actualités école ────────────────────────────────────────── */}
-          <Section id="actualites" title="4. Actualités de l'école">
+          <Section id="actualites" title="5. Actualités de l'école">
             <p>
-              Dans la barre latérale du studio, cliquez sur <strong>Actualités école</strong>. Vous verrez la liste de tous les articles existants.
+              Dans la barre latérale du studio, cliquez sur <strong>Actualités école</strong>, ou sur la carte <strong>Publier une actualité</strong> depuis l&apos;écran d&apos;accueil. Vous verrez la liste de tous les articles existants.
             </p>
 
             <h3 className="font-display font-semibold text-primary">Créer un nouvel article</h3>
             <div className="space-y-3">
-              <Step n={1}>Cliquez sur le bouton <strong>+ Nouveau document</strong> en haut à droite.</Step>
-              <Step n={2}>Remplissez les champs (voir ci-dessous).</Step>
+              <Step n={1}>Cliquez sur le bouton <strong>+ Créer</strong> en haut à droite.</Step>
+              <Step n={2}>Remplissez les champs (voir ci-dessous). L&apos;onglet <strong>Aide</strong>, à côté de <strong>Contenu</strong>, rappelle à quoi sert chaque champ directement dans le document.</Step>
               <Step n={3}>Cliquez sur <strong>Publier</strong> en bas à droite pour que l&apos;article soit visible sur le site.</Step>
             </div>
 
             <div className="space-y-2">
-              <Field name="Titre" desc="Titre de l'article (FR et EN)." />
+              <Field name="Titre" desc="Titre de l'article." />
               <Field name="Date de publication" desc="Date affichée sur la carte et l'article. Utilisée pour trier les articles du plus récent au plus ancien." />
               <Field name="Image" desc="Photo principale de l'article (format paysage recommandé)." />
               <Field name="Résumé court" desc="Texte court affiché sur la carte de la page d'accueil (2-3 phrases maximum)." />
@@ -219,7 +243,7 @@ export default function AdminGuidePage() {
           </Section>
 
           {/* ── Pages de l'école ────────────────────────────────────────── */}
-          <Section id="pages" title="5. Pages de l'école">
+          <Section id="pages" title="6. Pages de l'école">
             <p>
               Toutes les pages de contenu sont accessibles depuis la section <strong>Notre école</strong> dans la barre latérale.
             </p>
@@ -235,13 +259,17 @@ export default function AdminGuidePage() {
 
             <p>Les pages <strong>Informations pratiques</strong> (inscription, frais, restauration, vacances...) fonctionnent de la même manière, accessibles depuis la section correspondante.</p>
 
+            <p>
+              Chaque page dispose d&apos;un contenu en français et en anglais. Au lieu d&apos;afficher les deux à la fois, un petit interrupteur <strong>FR / EN</strong> au-dessus de chaque champ permet de basculer d&apos;une langue à l&apos;autre — un point creux à côté d&apos;EN signale qu&apos;il n&apos;a pas encore été rempli.
+            </p>
+
             <Tip>
-              Chaque page dispose de champs en français ET en anglais. Si le champ anglais est laissé vide, le site affichera le texte français par défaut.
+              Si le champ anglais est laissé vide, le site affichera le texte français par défaut.
             </Tip>
           </Section>
 
           {/* ── APEL ────────────────────────────────────────────────────── */}
-          <Section id="apel" title="6. APEL">
+          <Section id="apel" title="7. APEL">
             <p>
               L&apos;espace APEL est accessible de deux façons : depuis le studio principal (section APEL) ou depuis l&apos;espace dédié <Path href="/studio-apel" /> avec le mot de passe APEL.
             </p>
@@ -253,12 +281,12 @@ export default function AdminGuidePage() {
             </div>
 
             <Tip>
-              Les membres de l&apos;APEL utilisent l&apos;adresse <Path href="/login-apel" /> avec leur propre mot de passe. Ils ne voient que les actualités et événements APEL.
+              Les membres de l&apos;APEL utilisent l&apos;adresse <Path href="/login-apel" /> avec leur propre mot de passe. Ils ne voient que les actualités et événements APEL, avec leur propre écran d&apos;accueil.
             </Tip>
           </Section>
 
           {/* ── OGEC ────────────────────────────────────────────────────── */}
-          <Section id="ogec" title="7. OGEC">
+          <Section id="ogec" title="8. OGEC">
             <p>
               Même fonctionnement que l&apos;APEL. Accessible depuis le studio principal (section OGEC) ou depuis <Path href="/studio-ogec" /> avec le mot de passe OGEC.
             </p>
@@ -270,7 +298,7 @@ export default function AdminGuidePage() {
           </Section>
 
           {/* ── Publier ─────────────────────────────────────────────────── */}
-          <Section id="publier" title="8. Publier les modifications">
+          <Section id="publier" title="9. Publier & gérer vos contenus">
             <p>
               Dans Sanity Studio, les modifications ne sont <strong>pas automatiquement visibles</strong> sur le site. Il faut les publier manuellement.
             </p>
@@ -281,14 +309,18 @@ export default function AdminGuidePage() {
               <Step n={3}>Le site se met à jour dans les secondes qui suivent.</Step>
             </div>
 
-            <Tip>
-              Si le bouton Publier est grisé, le document n&apos;a pas été modifié depuis la dernière publication. Si vous voyez <strong>Brouillon</strong> à côté du titre, c&apos;est qu&apos;il existe des modifications non publiées.
-            </Tip>
+            <p>
+              Un bandeau près du titre du document indique clairement l&apos;état de la page : <strong>« En ligne »</strong> si elle correspond à ce qui est visible sur le site, <strong>« Modifications non publiées »</strong> s&apos;il reste des changements à publier, ou <strong>« Jamais publié »</strong> pour un contenu créé mais encore invisible sur le site.
+            </p>
 
-            <div className="rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-xs text-red-800">
-              <span className="font-semibold">Attention — </span>
-              Supprimer un document (article, membre de l&apos;équipe...) est irréversible. En cas de doute, préférez laisser le document en brouillon non publié plutôt que de le supprimer.
-            </div>
+            <h3 className="font-display font-semibold text-primary">Retirer un contenu du site</h3>
+            <p>
+              Il n&apos;est plus possible de supprimer définitivement un document depuis le studio. Pour retirer une actualité ou une page du site, utilisez <strong>Annuler la publication</strong> (dans le menu ••• en haut à droite du document) : le contenu disparaît du site mais reste enregistré, et peut être republié à tout moment en cliquant de nouveau sur <strong>Publier</strong>.
+            </p>
+
+            <Tip>
+              Aucune action dans le studio n&apos;efface définitivement un contenu. En cas de doute, annulez la publication plutôt que de laisser un contenu que vous n&apos;êtes plus sûr de vouloir.
+            </Tip>
           </Section>
 
           {/* Footer */}

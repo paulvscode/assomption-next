@@ -2,6 +2,7 @@
 
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
+import { frFRLocale } from "@sanity/locale-fr-fr";
 import { newsApel } from "./sanity/schemas/documents/newsApel";
 import { event } from "./sanity/schemas/documents/event";
 import { apiVersion, dataset, projectId } from "./sanity/env";
@@ -57,7 +58,7 @@ export default defineConfig({
   apiVersion,
   title: "APEL — Actualités & Événements",
   schema: { types: [newsApel, event] },
-  plugins: [structureTool({ structure, defaultDocumentNode })],
+  plugins: [structureTool({ structure, defaultDocumentNode }), frFRLocale()],
   document: {
     badges: (prev) => [...prev, publicationStatusBadge],
     actions: removeDeleteAction,
