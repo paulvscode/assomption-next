@@ -21,7 +21,7 @@ export default function LoginPage() {
     });
 
     if (res.ok) {
-      router.push("/studio");
+      router.push("/studio/structure/accueil");
       return;
     } else {
       setError("Mot de passe incorrect. / Incorrect password.");

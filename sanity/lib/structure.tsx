@@ -1,11 +1,20 @@
 import type { StructureBuilder } from "sanity/structure";
-import { Dashboard, DashboardIcons, type DashboardTask } from "../components/Dashboard";
+import { Dashboard, DashboardIcons, type DashboardTask, type PageGroup } from "../components/Dashboard";
+import { HelpPanel } from "../components/HelpPanel";
 
 const singleton = (S: StructureBuilder, id: string, title: string, type: string) =>
   S.listItem()
     .title(title)
     .id(id)
-    .child(S.document().schemaType(type).documentId(type));
+    .child(
+      S.document()
+        .schemaType(type)
+        .documentId(type)
+        .views([
+          S.view.form().title("Contenu"),
+          S.view.component(HelpPanel).id("aide").title("Aide"),
+        ])
+    );
 
 const dashboardTasks: DashboardTask[] = [
   {
@@ -16,13 +25,6 @@ const dashboardTasks: DashboardTask[] = [
     icon: DashboardIcons.news,
   },
   {
-    title: "Modifier la page d'accueil",
-    description: "Bannière, hero, contact",
-    intent: "edit",
-    type: "landing",
-    icon: DashboardIcons.image,
-  },
-  {
     title: "Mettre à jour l'équipe",
     description: "Ajouter ou modifier un professeur",
     intent: "create",
@@ -30,25 +32,66 @@ const dashboardTasks: DashboardTask[] = [
     icon: DashboardIcons.users,
   },
   {
-    title: "Infos pratiques",
-    description: "Localisation, horaires, contact",
-    intent: "edit",
-    type: "locationContact",
-    icon: DashboardIcons.info,
-  },
-  {
-    title: "Espace APEL",
-    description: "Présentation et actualités",
-    intent: "edit",
-    type: "apelPresentation",
-    icon: DashboardIcons.heart,
-  },
-  {
     title: "Paramètres du site",
     description: "Logo, couleur d'accent",
     intent: "edit",
     type: "settings",
     icon: DashboardIcons.settings,
+  },
+];
+
+const page = (title: string, type: string, description: string, icon = DashboardIcons.info): DashboardTask => ({
+  title,
+  description,
+  intent: "edit",
+  type,
+  icon,
+});
+
+const pageGroups: PageGroup[] = [
+  {
+    title: "Notre école",
+    pages: [
+      page("Page d'accueil", "landing", "Bannière, hero, liens rapides, contact", DashboardIcons.image),
+      page("Présentation de l'école", "schoolPresentation", "Texte, valeurs, photos"),
+      page("Projet éducatif", "educationalProject", "Contenu éditorial"),
+      page("Projet d'établissement", "schoolProject", "Contenu éditorial"),
+      page("Mission pastorale", "pastoralMission", "Contenu éditorial"),
+      page("Page équipe enseignante", "professorsPage", "Présentation de l'équipe", DashboardIcons.users),
+      page("Programme anglais", "englishProgram", "Contenu éditorial"),
+    ],
+  },
+  {
+    title: "Programmes spéciaux",
+    pages: [
+      page("Dispositif ASH", "ashPage", "Contenu éditorial"),
+      page("ULIS", "ulisPage", "Contenu éditorial"),
+      page("La classe anglophone", "englishClassPage", "Contenu éditorial"),
+    ],
+  },
+  {
+    title: "Informations pratiques",
+    pages: [
+      page("Localisation & contact", "locationContact", "Adresse, téléphone, carte"),
+      page("Restauration scolaire", "cafeteria", "Contenu éditorial"),
+      page("Formulaire d'inscription", "applicationForm", "Contenu éditorial"),
+      page("Frais de scolarité", "fees", "Contenu éditorial"),
+      page("Rentrée scolaire", "backToSchool", "Contenu éditorial", DashboardIcons.calendar),
+      page("Calendrier des vacances", "schoolBreaks", "Dates des vacances scolaires", DashboardIcons.calendar),
+      page("Autres documents", "otherDocuments", "Documents téléchargeables"),
+    ],
+  },
+  {
+    title: "APEL",
+    pages: [
+      page("Présentation APEL", "apelPresentation", "Texte de présentation", DashboardIcons.heart),
+    ],
+  },
+  {
+    title: "OGEC",
+    pages: [
+      page("Présentation OGEC", "ogecPresentation", "Texte de présentation", DashboardIcons.shield),
+    ],
   },
 ];
 
@@ -60,7 +103,7 @@ export const structure = (S: StructureBuilder) =>
         .title("🏠 Accueil")
         .id("accueil")
         .child(
-          S.component(() => <Dashboard tasks={dashboardTasks} />)
+          S.component(() => <Dashboard tasks={dashboardTasks} pageGroups={pageGroups} />)
             .title("Accueil")
             .id("accueil-dashboard")
         ),

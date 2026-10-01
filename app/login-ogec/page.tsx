@@ -21,7 +21,7 @@ export default function OgecLoginPage() {
     });
 
     if (res.ok) {
-      router.push("/studio-ogec");
+      router.push("/studio-ogec/structure/accueil");
     } else {
       setError("Mot de passe incorrect. / Incorrect password.");
       setLoading(false);

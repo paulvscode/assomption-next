@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { client } from "@/sanity/lib/client";
+import { draftMode } from "next/headers";
+import { VisualEditing } from "next-sanity/visual-editing";
+import { getClient } from "@/sanity/lib/client";
 import { singletonQuery, newsSchoolPreviewQuery } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 
@@ -89,6 +91,9 @@ export default async function LandingPage({
   const { locale } = await params;
   const f = fallback[(locale as Locale)] ?? fallback.fr;
   const l = locale as Locale;
+
+  const { isEnabled: isDraftMode } = await draftMode();
+  const client = getClient(isDraftMode);
 
   const [page, siteSettings, latestNews] = await Promise.all([
     client.fetch(singletonQuery("landing")),
@@ -359,6 +364,8 @@ export default async function LandingPage({
           </div>
         </div>
       </section>
+
+      {isDraftMode && <VisualEditing />}
     </div>
   );
 }

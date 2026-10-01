@@ -2,10 +2,12 @@
 
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
+import { frFRLocale } from "@sanity/locale-fr-fr";
 import { newsOgec } from "./sanity/schemas/documents/newsOgec";
 import { apiVersion, dataset, projectId } from "./sanity/env";
 import { Dashboard, DashboardIcons, type DashboardTask } from "./sanity/components/Dashboard";
 import { publicationStatusBadge } from "./sanity/lib/publicationStatusBadge";
+import { defaultDocumentNode, removeDeleteAction } from "./sanity/lib/documentConfig";
 import type { StructureBuilder } from "sanity/structure";
 
 const dashboardTasks: DashboardTask[] = [
@@ -45,6 +47,9 @@ export default defineConfig({
   apiVersion,
   title: "OGEC — Actualités",
   schema: { types: [newsOgec] },
-  plugins: [structureTool({ structure })],
-  document: { badges: (prev) => [...prev, publicationStatusBadge] },
+  plugins: [structureTool({ structure, defaultDocumentNode }), frFRLocale()],
+  document: {
+    badges: (prev) => [...prev, publicationStatusBadge],
+    actions: removeDeleteAction,
+  },
 });
