@@ -73,6 +73,21 @@ If nobody can log in, with SSH access (OVH Pro plans and above):
 php app/cli.php reset-password someone@example.org
 ```
 
+## Static demo (GitHub Pages)
+
+A read-only copy of the site and of the admin, to show the project without a
+PHP server: https://paulvscode.github.io/assomption-next/ (branch `gh-pages`).
+Everything in the admin is clickable, but nothing is saved (a message says so).
+
+To refresh it after changes, with the local server running and logged in to
+the admin (copy the `assomption_session` cookie value from the browser):
+
+```bash
+php ovh/tools/build-static.php /tmp/demo /assomption-next <session-cookie>
+cd /tmp/demo && git init -b gh-pages && git add -A && git commit -m "Update demo" \
+  && git push -f https://github.com/paulvscode/assomption-next.git gh-pages
+```
+
 ## Changing the public design
 
 The public pages use Tailwind classes, compiled once into `www/assets/site.css`.
