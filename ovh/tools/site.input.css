@@ -1,0 +1,69 @@
+@import "tailwindcss" source(none);
+@source "../app/views/site";
+@source "../app/site_functions.php";
+
+@theme {
+  --color-primary:      #5C5763;
+  --color-primary-dark: #3D3B42;
+  --color-surface:      #F5F5F5;
+  --color-muted:        #75727C;
+  --color-border:       #E4E2E6;
+  --color-ink:          #2E2C31;
+  --color-accent:       #8BB1C5; /* overridden by the colour chosen in the admin */
+
+  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    "Nunito", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Self-hosted fonts (no request to Google: GDPR-friendly). */
+@font-face { font-family: Montserrat; font-style: normal; font-weight: 300 800; font-display: swap; src: url(fonts/montserrat-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: Montserrat; font-style: normal; font-weight: 300 800; font-display: swap; src: url(fonts/montserrat-latin-ext.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: Nunito; font-style: normal; font-weight: 300 800; font-display: swap; src: url(fonts/nunito-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: Nunito; font-style: normal; font-weight: 300 800; font-display: swap; src: url(fonts/nunito-latin-ext.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@keyframes hero-zoom {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.08); }
+}
+.animate-hero-zoom { animation: hero-zoom 16s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-zoom { animation: none; }
+  html { scroll-behavior: auto !important; }
+}
+
+a, button, [role="button"], summary { cursor: pointer; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+:focus-visible { outline: 3px solid #8BB1C5; outline-offset: 2px; border-radius: 4px; }
+summary::-webkit-details-marker { display: none; }
+details[open] > summary svg { transform: rotate(180deg); }
+/* Dropdown opened by click / keyboard (see site.js) */
+[data-dropdown].is-open .dropdown { opacity: 1; transform: none; pointer-events: auto; }
+
+/* Formatted text written in the admin */
+.prose { color: var(--color-ink); line-height: 1.75; }
+.prose > * + * { margin-top: 1.1em; }
+.prose h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--color-primary); line-height: 1.3; margin-top: 1.8em; }
+.prose h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--color-primary); line-height: 1.35; margin-top: 1.5em; }
+.prose > h2:first-child, .prose > h3:first-child { margin-top: 0; }
+.prose strong { font-weight: 700; color: var(--color-primary-dark); }
+.prose a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 2px; }
+.prose a:hover { opacity: .75; }
+.prose ul, .prose ol { padding-left: 1.4em; }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li + li { margin-top: .4em; }
+.prose li::marker { color: color-mix(in srgb, var(--color-primary) 60%, transparent); }
+.prose p + ul, .prose p + ol { margin-top: .5em; }
+.prose blockquote { border-left: 4px solid color-mix(in srgb, var(--color-primary) 30%, transparent); padding-left: 1rem; font-style: italic; color: var(--color-muted); }
+.prose-lg { font-size: 1.0625rem; }
+@media (min-width: 640px) { .prose-lg { font-size: 1.125rem; } }
+.prose-sm { font-size: .875rem; }
+.prose-sm > * + * { margin-top: .8em; }
+.prose-legal h2 { font-size: 1.15rem; }
