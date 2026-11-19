@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head><meta name="robots" content="noindex, nofollow"><script>window.DEMO_BASE="\/assomption-next";</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Connexion · Administration du site</title>
+<link rel="stylesheet" href="/assomption-next/assets/admin.css?v=1795076082">
+</head>
+<body class="admin auth-page">
+<main class="auth-card">
+  <div class="brand brand-center">
+    <span class="brand-mark" aria-hidden="true">A</span>
+    <span><strong>École de l’Assomption</strong><small>Gestion du site</small></span>
+  </div>
+  <h1>Connexion</h1>
+      <form method="post" action="/assomption-next/admin/connexion" class="stack">
+    <input type="hidden" name="_csrf" value="e7158cd62ea4cedacdce3c65a11a111381122a754735086c726fdc5c6a91c52a">    <div class="field">
+      <label for="email">Votre adresse e-mail</label>
+      <input type="email" id="email" name="email" value="" required autocomplete="username" autofocus>
+    </div>
+    <div class="field">
+      <label for="password">Votre mot de passe</label>
+      <div class="password-wrap">
+        <input type="password" id="password" name="password" required autocomplete="current-password" >
+        <button type="button" class="btn btn-ghost btn-small" data-show-password="password" aria-pressed="false"><svg class="icon sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Afficher</button>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block btn-large"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Se connecter</button>
+  </form>
+  <details class="forgot">
+    <summary>Mot de passe oublié ?</summary>
+    <p>Pas d’inquiétude : demandez à l’administrateur du site (la direction de l’école) de vous créer un nouveau mot de passe temporaire. Vous le changerez à la connexion suivante.</p>
+  </details>
+  <p class="auth-foot"><a href="/assomption-next/fr">← Retour au site</a></p>
+</main>
+<script src="/assomption-next/assets/demo.js"></script><script src="/assomption-next/assets/admin.js" defer></script>
+</body>
+</html>
