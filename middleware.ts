@@ -1,6 +1,13 @@
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
+import { type AdminArea, verifySessionToken } from "./lib/adminSession";
+
+const AREA_BY_COOKIE: Record<string, AdminArea> = { studio_auth: "studio", apel_auth: "apel", ogec_auth: "ogec" };
+
+async function isAuthed(request: NextRequest, cookie: string): Promise<boolean> {
+  return verifySessionToken(AREA_BY_COOKIE[cookie], request.cookies.get(cookie)?.value);
+}
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -28,15 +35,14 @@ const studioRoots: { path: string; cookie: string; dashboard: string }[] = [
   { path: "/studio-ogec/structure", cookie: "ogec_auth", dashboard: "/studio-ogec/structure/accueil" },
 ];
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname: raw } = request.nextUrl;
   const pathname = raw.length > 1 && raw.endsWith("/") ? raw.slice(0, -1) : raw;
 
   // Login pages — already authenticated? Skip straight to the dashboard.
   const loginRoute = loginRoutes.find((route) => route.path === pathname);
   if (loginRoute) {
-    const auth = request.cookies.get(loginRoute.cookie);
-    if (auth?.value === "true") {
+    if (await isAuthed(request, loginRoute.cookie)) {
       return NextResponse.redirect(new URL(loginRoute.dashboard, request.url));
     }
     return NextResponse.next();
@@ -45,8 +51,7 @@ export function middleware(request: NextRequest) {
   // Bare studio root — authenticated visitors go straight to the dashboard.
   const studioRoot = studioRoots.find((route) => route.path === pathname);
   if (studioRoot) {
-    const auth = request.cookies.get(studioRoot.cookie);
-    if (auth?.value === "true") {
+    if (await isAuthed(request, studioRoot.cookie)) {
       return NextResponse.redirect(new URL(studioRoot.dashboard, request.url));
     }
     // Not authenticated — fall through to the studio routes below, which
@@ -56,8 +61,7 @@ export function middleware(request: NextRequest) {
   // Studio routes — check the corresponding cookie
   for (const route of studioRoutes) {
     if (pathname.startsWith(route.prefix)) {
-      const auth = request.cookies.get(route.cookie);
-      if (auth?.value !== "true") {
+      if (!(await isAuthed(request, route.cookie))) {
         return NextResponse.redirect(new URL(route.login, request.url));
       }
       return NextResponse.next();
